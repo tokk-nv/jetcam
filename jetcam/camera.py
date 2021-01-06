@@ -12,6 +12,7 @@ class Camera(traitlets.HasTraits):
     running = traitlets.Bool(default_value=False)
     
     def __init__(self, *args, **kwargs):
+        print("Camera::__init__() ||")
         super(Camera, self).__init__(*args, **kwargs)
         if self.format == 'bgr8':
             self.value = np.empty((self.height, self.width, 3), dtype=np.uint8)
@@ -22,6 +23,7 @@ class Camera(traitlets.HasTraits):
         raise NotImplementedError
         
     def read(self):
+        print("Camera::read() ||")
         if self._running:
             raise RuntimeError('Cannot read directly while camera is running')
         self.value = self._read()
@@ -35,6 +37,7 @@ class Camera(traitlets.HasTraits):
             
     @traitlets.observe('running')
     def _on_running(self, change):
+        print("Camera::_on_running() ||")
         if change['new'] and not change['old']:
             # transition from not running -> running
             self._running = True

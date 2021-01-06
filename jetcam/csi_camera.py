@@ -14,10 +14,13 @@ class CSICamera(Camera):
     capture_height = traitlets.Integer(default_value=480)
     
     def __init__(self, *args, **kwargs):
+        print("CSICamera::__init__() || ")
         super(CSICamera, self).__init__(*args, **kwargs)
         try:
-            print("self.cap = cv2.VideoCapture('" + self._gst_str() + "', cv2.CAP_GSTREAMER)")
+            print(" self.cap = cv2.VideoCapture('" + self._gst_str() + "', cv2.CAP_GSTREAMER)")
             self.cap = cv2.VideoCapture(self._gst_str(), cv2.CAP_GSTREAMER)
+            
+            print("self.cap set")
 
             re, image = self.cap.read()
 
@@ -37,6 +40,7 @@ class CSICamera(Camera):
                 self.capture_device, self.capture_width, self.capture_height, self.capture_fps, self.width, self.height)
     
     def _read(self):
+        print("CSICamera::_read() || ")
         re, image = self.cap.read()
         if re:
             return image
